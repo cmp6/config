@@ -1,21 +1,26 @@
+" vim version 9.2.10 +
 " --- Look
 set t_Co=256
 syntax on
 set background=dark
-colorscheme habamax "xcodedarkhc
+colorscheme catppuccin
 
-"hi Search ctermbg=lightgreen ctermfg=black
-"hi CurSearch ctermbg=white cterm=inverse
-"hi Visual cterm=inverse
+hi Normal ctermbg=none
 
 set laststatus=2
 set hlsearch
 set nowrap
 set number
 set relativenumber
+
 set cursorline
+set cursorcolumn
+
+hi cursorline ctermbg=236
+hi cursorcolumn ctermbg=235
 
 " --- Behaviour
+set clipboard=unnamedplus
 set mouse=a
 filetype indent on
 set noesckeys
@@ -23,16 +28,15 @@ set scrolloff=4
 set incsearch
 set hidden
 set autochdir
+set shortmess-=S
 
-let tabsz=2
+let tabsz=4
 let &tabstop=tabsz
 let &shiftwidth=tabsz
 
 set expandtab "XXX: turn off for makefiles n stuff
 
 set wildmode=list:longest
-
-set rtp+="~/.config/vim/plugin/vim-svelte-plugin/"
 
 let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
 
@@ -53,4 +57,11 @@ map <C-x> :b#<cr>
 map n nzz
 map N Nzz
 
-set clipboard=unnamedplus
+"highlight word under cursor but dont jump to next
+nnoremap * :let @/='\<'.expand('<cword>').'\>'<CR>:set hlsearch<CR>
+
+map <C-s> :set spell!<cr>
+
+"git blame the current line!
+nnoremap <leader>b :echo system('git blame -L '.line('.').','.line('.').' '.expand('%'))<cr>
+command! Blame :echo system('git blame -L '.line('.').','.line('.').' '.expand('%'))
