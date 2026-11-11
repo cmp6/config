@@ -13,11 +13,15 @@ set nowrap
 set number
 set relativenumber
 
+" use: ctags -R --languages=XYZ and use ctrl-] to goto func def
+set tags=./tags;,tags;
+
 set cursorline
 set cursorcolumn
 
 hi cursorline ctermbg=236
 hi cursorcolumn ctermbg=235
+hi Visual ctermfg=20 cterm=bold ctermbg=207
 
 " --- Behaviour
 set clipboard=unnamedplus
@@ -44,6 +48,9 @@ autocmd BufReadPost *
     \ if line("'\'") > 0 && line("'\'") <= line("$") |
     \   exe "normal! g`\"" |
     \ endif
+
+" set unknown files to python syntax highlighting
+autocmd BufReadPost,BufNewFile * if &filetype == '' | setfiletype python | endif
 
 " --- Binds
 imap <C-p> <Nop>
